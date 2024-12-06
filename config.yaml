@@ -8,25 +8,25 @@ data:
     from_file: false
     # 檔案路徑
     file:
-        path: "data/medium.csv"
+        path: "data/small.csv"
         format: csv
     # 隨機資料的設定
     random:
-        size: 30 # 城市數量
+        size: 100 # 城市數量
         min: 0 # 最小值
         max: 1 # 最大值
 
 # 遺傳演算法的參數
 ga:
     # 要演化幾代
-    generations: 20
+    generations: 500
     # 群體的大小
     population:
         # 設定群體大小的方式
         # value: 固定值，直接設定群體大小
         # ratio: 比率，人口數為 city_size * ratio
         mode: value
-        value: 5000
+        value: 1000
     # 基因要切成幾段
     k: 4
     # 表現最好的前幾名才能夠交配，0 ~ 1 之間的值

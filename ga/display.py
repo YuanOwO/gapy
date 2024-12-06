@@ -9,6 +9,8 @@ from numpy import double
 
 from .location import Route
 
+__all__ = ["plot_init", "plot_route", "plot_summary"]
+
 # 路徑的樣式
 possible_path_style = dict(color="k", alpha=0.5)
 now_path_style = dict(color="#d62728")
@@ -108,7 +110,7 @@ def plot_summary(filename: str, summary: dict) -> None:
     best_x = np.argmin(min_)
     best_y = min_[best_x]
     ax.set_xlim(0, max_x - 1)
-    ax.set_ylim(min_y, max_y)
+    # ax.set_ylim(min_y, max_y)
     ax.set_xticks(np.arange(0, max_x, max(max_x // 10, 1)))
     ax.set_xticks(np.arange(0, max_x, max(max_x // 50, 1)), minor=True)
     # ax.set_yticks(np.arange(min_y, max_y, (max_y - min_y) / 5))
@@ -118,16 +120,16 @@ def plot_summary(filename: str, summary: dict) -> None:
     ax.grid()
 
     # 畫出演化過程
-    ax.plot(mean, label="mean")
-    ax.plot(min_, label="min")
-    ax.plot(max_, label="max")
-    plt.fill_between(range(len(mean)), mean - std, mean + std, alpha=0.5, label="std")
+    ax.plot(median, label="中位數")
+    ax.plot(min_, label="最短距離")
+    ax.plot(max_, label="最長距離")
+    plt.fill_between(range(len(mean)), q1, q3, alpha=0.5, label="IQR")
 
     ax.plot(best_x, best_y, "o")
     ax.annotate(
-        f"最佳解: {best_y:.4f} 在第 {best_x} 代",
+        f"最佳解: {best_y:.4f} (在第 {best_x} 代)",
         (best_x, best_y),
-        (best_x + 1, best_y - 0.1),
+        (best_x + max_x / 20, best_y - 0.1),
         arrowprops=dict(arrowstyle="->"),
     )
 
